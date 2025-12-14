@@ -5,11 +5,11 @@ import {notifications} from "../assets/assets.js";
 const Notification = () => {
   
   return (
-    <div className="bg-background shadow-lg min-h-0 h-full overflow-y-auto scroll-smooth scrollbar-hide p-4 xl:p-6">
+    <div className="bg-white shadow-lg min-h-0 h-full overflow-y-auto scroll-smooth scrollbar-hide p-4 xl:p-6">
 
-      <h3 className="font-semibold mb-4 xl:text-3xl">Notifications</h3>
+      <h3 className="font-semibold mb-8 xl:text-3xl">Notifications</h3>
 
-      <p className="text-sm xl:text-xl font-semibold mb-2">New</p>
+      {/* <p className="text-sm xl:text-xl font-semibold mb-2">New</p> */}
 
       {notifications.map((n, i) => (
         <div key={i} className="flex items-center gap-3 mb-3">

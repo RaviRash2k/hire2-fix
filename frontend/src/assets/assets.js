@@ -63,3 +63,27 @@ export const notifications = [
     { name: "Kusal Mendis", message: "commented on your post.", time: "6h" },
     { name: "Charith Asalanka", message: "poked you.", time: "5h" },
 ]
+
+export const chats = [
+  {
+    id: 1,
+    name: "Nimal Perera",
+    message: "Bro, can you fix my website?",
+    time: "2m",
+    online: true,
+  },
+  {
+    id: 2,
+    name: "Kasun Silva",
+    message: "Puka sududa?",
+    time: "10m",
+    online: false,
+  },
+  {
+    id: 3,
+    name: "Amal Fernando",
+    message: "Thanks machan ❤️",
+    time: "1h",
+    online: true,
+  },
+]
