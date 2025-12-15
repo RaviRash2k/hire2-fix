@@ -3,9 +3,10 @@ import searchIcon from "../assets/search_icon.png"
 import chatIcon from "../assets/chat-icon.png"
 import notificationIcon from "../assets/notification.png"
 import profileImg from "../assets/profile_1.jpg"
-import { Menu } from "lucide-react"
+import { Menu, Settings, ArrowRightLeft, LogOut, MessageCircleHeart } from "lucide-react"
 import Notification from "./Notification"
 import Message from "./Message"
+import { useNavigate } from 'react-router-dom'
 
 const Navbar = ({ state, setState }) => {
 
@@ -15,6 +16,8 @@ const Navbar = ({ state, setState }) => {
   const profileRef = useRef(null)
   const panelRef = useRef(null)
   const panelWrapperRef = useRef(null)
+  const navigate = useNavigate()
+  const [nav, setNav] = useState('home')
 
 
   // close outside click
@@ -56,10 +59,55 @@ const Navbar = ({ state, setState }) => {
 
           {/* links */}
           <ul className="hidden lg:flex gap-8 font-medium lg:text-xl text-white">
-            <li className="cursor-pointer">Home</li>
-            <li className="cursor-pointer">About</li>
-            <li className="cursor-pointer">Services</li>
-            <li className="cursor-pointer">Contact</li>
+
+            <li
+              onClick={() => { navigate('/'); setNav('home') }}
+              className={`relative cursor-pointer transition
+                ${nav === 'home' ? 'text-white' : 'text-white/70 hover:text-white'}
+              `}
+            >
+              Home
+              {nav === 'home' && (
+                <span className="absolute left-0 -bottom-2 h-[3px] w-full bg-white rounded-full"></span>
+              )}
+            </li>
+
+            <li
+              onClick={() => { navigate('/about'); setNav('about') }}
+              className={`relative cursor-pointer transition
+                ${nav === 'about' ? 'text-white' : 'text-white/70 hover:text-white'}
+              `}
+            >
+              About
+              {nav === 'about' && (
+                <span className="absolute left-0 -bottom-2 h-[3px] w-full bg-white rounded-full"></span>
+              )}
+            </li>
+
+            <li
+              onClick={() => { navigate('/services'); setNav('service') }}
+              className={`relative cursor-pointer transition
+                ${nav === 'service' ? 'text-white' : 'text-white/70 hover:text-white'}
+              `}
+            >
+              Services
+              {nav === 'service' && (
+                <span className="absolute left-0 -bottom-2 h-[3px] w-full bg-white rounded-full"></span>
+              )}
+            </li>
+
+            <li
+              onClick={() => { navigate('/contact'); setNav('contact') }}
+              className={`relative cursor-pointer transition
+                ${nav === 'contact' ? 'text-white' : 'text-white/70 hover:text-white'}
+              `}
+            >
+              Contact
+              {nav === 'contact' && (
+                <span className="absolute left-0 -bottom-2 h-[3px] w-full bg-white rounded-full"></span>
+              )}
+            </li>
+
           </ul>
 
           {/* right */}
@@ -127,17 +175,35 @@ const Navbar = ({ state, setState }) => {
                     <p className="font-medium">Ravindu Rashmitha</p>
                   </div>
 
-                  <ul className="flex flex-col gap-4 p-5">
-                    <li className="cursor-pointer hover:bg-gray-100 px-4 py-2">Setting</li>
-                    <li className="cursor-pointer hover:bg-gray-100 px-4 py-2">Change to technician</li>
-                    <li className="cursor-pointer hover:bg-gray-100 px-4 py-2">Give feedback</li>
-                    <li className="cursor-pointer hover:bg-gray-100 px-4 py-2">Logout</li>
+                  <ul className="flex flex-col gap-2 lg:gap-4 p-4 lg:p-6">
+
+                    <div className='flex rounded-xl items-center gap-4 cursor-pointer hover:bg-gray-100 px-2 py-2'>
+                      <Settings />
+                      <li className="">Setting</li>
+                    </div>
+
+                    <div className='flex rounded-xl items-center gap-4 cursor-pointer hover:bg-gray-100 px-2 py-2'>
+                      <ArrowRightLeft />
+                      <li className="">Change to technician</li>
+                    </div>
+
+                    <div className='flex rounded-xl items-center gap-4 cursor-pointer hover:bg-gray-100 px-2 py-2'>
+                      <MessageCircleHeart />
+                      <li className="">Give feedback</li>
+                    </div>
+
+                    <div className='flex rounded-xl items-center gap-4 cursor-pointer hover:bg-gray-100 px-2 py-2'>
+                      <LogOut />
+                      <li className="">Logout</li>
+                    </div>
+
                   </ul>
                 </div>
               )}
             </div>
 
           </div>
+
         </div>
       </nav>
 
@@ -160,10 +226,10 @@ const Navbar = ({ state, setState }) => {
         </div>
 
         <ul className="flex flex-col gap-6 p-5 text-xl">
-          <li className="cursor-pointer">Home</li>
-          <li className="cursor-pointer">About</li>
-          <li className="cursor-pointer">Services</li>
-          <li className="cursor-pointer">Contact</li>
+          <li className="cursor-pointer" onClick={() => navigate('/')}>Home</li>
+          <li className="cursor-pointer" onClick={() => navigate('/about')}>About</li>
+          <li className="cursor-pointer" onClick={() => navigate('/services')}>Services</li>
+          <li className="cursor-pointer" onClick={() => navigate('/contact')}>Contact</li>
         </ul>
       </div>
     </>

@@ -13,11 +13,9 @@ const PostFeed = () => {
       <div className="bg-white rounded-xl shadow-xl/20 p-4 flex items-center gap-3">
         <img src={profileImg} className="w-10 h-10 rounded-full" />
 
-        <input
-          type="text"
-          placeholder="Hello Ravindu, What you want to fix?"
-          className="flex-1 bg-gray-200 rounded-full px-4 py-2 outline-none text-[14px] xl:text-[17px]"
-        />
+        <div className="flex-1 bg-gray-200 rounded-full px-4 py-2 outline-none text-[14px] xl:text-[17px]">
+          <p className='text-gray-600'>Hello Ravindu, What you want to fix?</p>
+        </div>
 
         <img src={filter} className="w-6 h-6 cursor-pointer" />
       </div>

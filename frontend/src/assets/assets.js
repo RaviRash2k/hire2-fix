@@ -1,6 +1,10 @@
 import profile1 from "./profile_1.jpg";
 import post1 from "./post1.jpg";
 import post2 from "./post2.jpg";
+import electrician from "./electrician_service.jpg";
+import plumber from "./plumber_service.jpg";
+import mechanic from "./mechanic_service.jpg";
+import cleaner from "./cleaner_service.jpg";
 
 export const posts = [
   {
@@ -85,5 +89,28 @@ export const chats = [
     message: "Thanks machan ❤️",
     time: "1h",
     online: true,
+  },
+]
+
+export const services = [
+  {
+    title: "Electrical Services",
+    desc: "Wiring, repairs, installations, and electrical safety checks.",
+    img: electrician,
+  },
+  {
+    title: "Plumbing Services",
+    desc: "Leak fixing, pipe installation, drainage, and water system repairs.",
+    img: plumber,
+  },
+  {
+    title: "Mechanical Repairs",
+    desc: "Vehicle, machinery, and equipment maintenance and fixing.",
+    img: mechanic,
+  },
+  {
+    title: "Cleaning Services",
+    desc: "Home, office, and commercial cleaning by professionals.",
+    img: cleaner,
   },
 ]
