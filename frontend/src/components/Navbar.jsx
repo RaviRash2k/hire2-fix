@@ -52,7 +52,7 @@ const Navbar = ({ state, setState }) => {
               className="w-6 h-6 cursor-pointer text-white lg:hidden"
               onClick={() => setMenuOpen(true)}
             />
-            <h1 className="text-xl md:text-2xl font-bold text-white">
+            <h1 className="text-xl md:text-2xl font-bold text-white" onClick={()=> { navigate('/'); setNav('home') }}>
               Hire 2 Fix
             </h1>
           </div>
@@ -230,6 +230,8 @@ const Navbar = ({ state, setState }) => {
           <li className="cursor-pointer" onClick={() => navigate('/about')}>About</li>
           <li className="cursor-pointer" onClick={() => navigate('/services')}>Services</li>
           <li className="cursor-pointer" onClick={() => navigate('/contact')}>Contact</li>
+          <li className="cursor-pointer" onClick={() => navigate('/categories')}>Categories</li>
+          <li className="cursor-pointer" onClick={() => navigate('/find-near-me')}>Find near me</li>
         </ul>
       </div>
     </>
