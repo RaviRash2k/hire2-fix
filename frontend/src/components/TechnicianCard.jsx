@@ -1,9 +1,13 @@
 import React from 'react'
 import { MessageCircle } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 const TechnicianCard = ({ worker }) => {
+
+  const navigate = useNavigate()
+
   return (
-    <div className="bg-white rounded-xl h-30 lg:h-40 shadow-xl/10 hover:shadow-xl/30 transition-all duration-300 p-2 m-2 flex items-center justify-between gap-4">
+    <div onClick={() => navigate(`/technician/${worker.id}`)} className="bg-white rounded-xl h-30 lg:h-40 shadow-xl/10 hover:shadow-xl/30 transition-all duration-300 p-2 m-2 flex items-center justify-between gap-4">
 
       {/* LEFT */}
       <div className="flex items-center gap-4">
@@ -36,7 +40,6 @@ const TechnicianCard = ({ worker }) => {
       </button>
 
     </div>
-
 
   )
 }
