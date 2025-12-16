@@ -6,7 +6,7 @@ import profileImg from "../assets/profile_1.jpg"
 import { Menu, Settings, ArrowRightLeft, LogOut, MessageCircleHeart } from "lucide-react"
 import Notification from "./Notification"
 import Message from "./Message"
-import { useNavigate } from 'react-router-dom'
+import { useLocation, useNavigate } from 'react-router-dom'
 
 const Navbar = ({ state, setState }) => {
 
@@ -17,7 +17,13 @@ const Navbar = ({ state, setState }) => {
   const panelRef = useRef(null)
   const panelWrapperRef = useRef(null)
   const navigate = useNavigate()
-  const [nav, setNav] = useState('home')
+  const location = useLocation();
+  const [nav, setNav] = useState('/')
+
+  //set active nav link
+  useEffect(()=> {
+    setNav(location.pathname);
+  }, [location.pathname])
 
 
   // close outside click
@@ -61,49 +67,49 @@ const Navbar = ({ state, setState }) => {
           <ul className="hidden lg:flex gap-8 font-medium lg:text-xl text-white">
 
             <li
-              onClick={() => { navigate('/'); setNav('home') }}
+              onClick={() => { navigate('/'); setNav('/') }}
               className={`relative cursor-pointer transition
-                ${nav === 'home' ? 'text-white' : 'text-white/70 hover:text-white'}
+                ${nav === '/' ? 'text-white' : 'text-white/70 hover:text-white'}
               `}
             >
               Home
-              {nav === 'home' && (
+              {nav === '/' && (
                 <span className="absolute left-0 -bottom-2 h-[3px] w-full bg-white rounded-full"></span>
               )}
             </li>
 
             <li
-              onClick={() => { navigate('/about'); setNav('about') }}
+              onClick={() => { navigate('/about'); setNav('/about') }}
               className={`relative cursor-pointer transition
-                ${nav === 'about' ? 'text-white' : 'text-white/70 hover:text-white'}
+                ${nav === '/about' ? 'text-white' : 'text-white/70 hover:text-white'}
               `}
             >
               About
-              {nav === 'about' && (
+              {nav === '/about' && (
                 <span className="absolute left-0 -bottom-2 h-[3px] w-full bg-white rounded-full"></span>
               )}
             </li>
 
             <li
-              onClick={() => { navigate('/services'); setNav('service') }}
+              onClick={() => { navigate('/services'); setNav('/services') }}
               className={`relative cursor-pointer transition
-                ${nav === 'service' ? 'text-white' : 'text-white/70 hover:text-white'}
+                ${nav === '/services' ? 'text-white' : 'text-white/70 hover:text-white'}
               `}
             >
               Services
-              {nav === 'service' && (
+              {nav === '/services' && (
                 <span className="absolute left-0 -bottom-2 h-[3px] w-full bg-white rounded-full"></span>
               )}
             </li>
 
             <li
-              onClick={() => { navigate('/contact'); setNav('contact') }}
+              onClick={() => { navigate('/contact'); setNav('/contact') }}
               className={`relative cursor-pointer transition
-                ${nav === 'contact' ? 'text-white' : 'text-white/70 hover:text-white'}
+                ${nav === '/contact' ? 'text-white' : 'text-white/70 hover:text-white'}
               `}
             >
               Contact
-              {nav === 'contact' && (
+              {nav === '/contact' && (
                 <span className="absolute left-0 -bottom-2 h-[3px] w-full bg-white rounded-full"></span>
               )}
             </li>

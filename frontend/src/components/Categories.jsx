@@ -14,7 +14,7 @@ const Categories = ({setSelectedCategory, setCurrentPage, selectedCategory}) => 
         {categories.map((item, i) => (
           <li
             key={i}
-            onClick={()=> {setSelectedCategory(item); setCurrentPage(1)}}
+            onClick={()=> {navigate('/categories'); setSelectedCategory(item); setCurrentPage(1)}}
             className={selectedCategory === item ? "text-theme py-3 text-[14px] xl:text-[19px] border-gray-400 font-medium cursor-pointer hover:text-theme" : "py-3 text-[14px] xl:text-[19px] border-gray-400 font-medium cursor-pointer hover:text-theme"}
           >
             {item}

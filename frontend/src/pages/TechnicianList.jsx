@@ -6,7 +6,7 @@ import { workers } from "../assets/assets.js"
 
 const TechnicianList = () => {
 
-  const [selectedCategory, setSelectedCategory] = useState("Carpenters");
+  const [selectedCategory, setSelectedCategory] = useState(null);
 
   const filteredWorkers =
         workers.filter(
