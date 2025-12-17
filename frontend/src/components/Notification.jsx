@@ -1,8 +1,11 @@
 import React from 'react'
 import profileImg from "../assets/profile_1.jpg";
 import {notifications} from "../assets/assets.js";
+import { useNavigate } from "react-router-dom"
 
 const Notification = () => {
+
+  const navigate = useNavigate()
   
   return (
     <div className="bg-white shadow-lg min-h-0 h-full overflow-y-auto scroll-smooth scrollbar-hide p-4 xl:p-6">
@@ -19,7 +22,7 @@ const Notification = () => {
           />
           <div className="text-[14px] xl:text-[19px]">
             <p>
-              <span className="font-medium">{n.name}</span> {n.message}.
+              <span className="font-medium" onClick={() => navigate(`/technician/${n.id}`)}>{n.name}</span> {n.message}.
             </p>
             <p className="text-[13px] xl:text-[18px] text-gray-500">{n.time}</p>
           </div>

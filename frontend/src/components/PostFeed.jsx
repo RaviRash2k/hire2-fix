@@ -4,8 +4,12 @@ import likeIcon from "../assets/like.png";
 import commentIcon from "../assets/comment.png";
 import filter from "../assets/filter.png";
 import {posts} from "../assets/assets.js";
+import { useNavigate } from "react-router-dom"
 
 const PostFeed = () => {
+  
+  const navigate = useNavigate()
+
   return (
     <div className="flex flex-col px-4 md:px-10 py-4 gap-4 h-full min-h-0 overflow-y-auto scrollbar-hide">
 
@@ -31,9 +35,10 @@ const PostFeed = () => {
             <img
               src={post.userImage}
               className="w-10 h-10 rounded-full"
+              onClick={() => navigate(`/technician/${post.id}`)}
             />
             <div>
-              <p className="font-semibold">{post.userName}</p>
+              <p className="font-semibold" onClick={() => navigate(`/technician/${post.id}`)}>{post.userName}</p>
               <p className="text-gray-500">{post.time}</p>
             </div>
           </div>

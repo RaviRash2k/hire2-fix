@@ -1,9 +1,11 @@
 import React from "react"
 import { useChatStore } from "../store/chatStore"
 import { X, Send } from "lucide-react"
+import { useNavigate } from "react-router-dom"
 
 const ChatPopup = () => {
   const { isOpen, activeUser, closeChat } = useChatStore()
+  const navigate = useNavigate()
 
   if (!isOpen) return null
 
@@ -23,7 +25,7 @@ const ChatPopup = () => {
             />
 
             <div>
-            <p className="font-semibold text-white text-[14px] xl:text-[19px]">
+            <p className="font-semibold text-white text-[14px] xl:text-[19px]" onClick={() => {navigate(`/technician/${activeUser.id}`); closeChat()}}>
                 {activeUser? activeUser.name : "User"}
             </p>
             <p className="text-white/70 text-[10px] xl:text-[15px]">
