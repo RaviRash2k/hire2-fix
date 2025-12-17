@@ -74,6 +74,7 @@ export const chats = [
     name: "Nimal Perera",
     message: "Bro, can you fix my website?",
     time: "2m",
+    job: "Carpenters",
     online: true,
   },
   {
@@ -81,6 +82,7 @@ export const chats = [
     name: "Kasun Silva",
     message: "Puka sududa?",
     time: "10m",
+    job: "Electricians",
     online: false,
   },
   {
@@ -88,6 +90,7 @@ export const chats = [
     name: "Amal Fernando",
     message: "Thanks machan ❤️",
     time: "1h",
+    job: "Carpenters",
     online: true,
   },
 ]
@@ -140,6 +143,21 @@ export const workers = [
     feedbacks: [
       { user: "Nimal", comment: "Very professional work" },
       { user: "Sunil", comment: "Highly recommended" }
+    ]
+  },
+
+  {
+    id: 2,
+    name: "Nalin Silva",
+    job: "Carpenters",
+    location: "Colombo",
+    phone: "077 123 4567",
+    workingDays: "Mon - Sat",
+    workingHours: "8.00 AM - 6.00 PM",
+    bestTime: "9.00 AM - 12.00 PM",
+    image: profile1,
+    feedbacks: [
+      { user: "Nimal", comment: "Very professional work" }
     ]
   }
 ]

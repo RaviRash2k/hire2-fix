@@ -3,11 +3,14 @@ import { useParams } from "react-router-dom"
 import { workers } from "../assets/assets"
 import { MessageCircle } from "lucide-react"
 import DetailCard from '../components/DetailCard'
+import { useChatStore } from "../store/chatStore"
+
 
 const Profile = () => {
   const { id } = useParams()
   const technician = workers.find(w => w.id === Number(id))
   const [newFeedback, setNewFeedback] = useState("")
+  const { openChat } = useChatStore()
 
   if (!technician) return <p>Technician not found</p>
 
@@ -43,7 +46,7 @@ const Profile = () => {
 
           {/* ACTIONS */}
           <div className="flex flex-wrap justify-center md:justify-start gap-4 mt-6">
-            <button className="flex items-center gap-2 bg-theme text-white px-6 py-3 rounded-xl hover:bg-theme/80 transition">
+            <button className="flex items-center gap-2 bg-theme text-white px-6 py-3 rounded-xl hover:bg-theme/80 transition" onClick={() => openChat(technician)}>
               <MessageCircle size={20} />
               Chat Now
             </button>

@@ -1,8 +1,12 @@
 import React from 'react'
 import profileImg from "../assets/profile_1.jpg"
 import {chats} from "../assets/assets.js"
+import { useChatStore } from "../store/chatStore"
 
 const Message = () => {
+
+  const { openChat } = useChatStore()
+
   return (
     <div className="bg-white shadow-lg h-full overflow-y-auto p-4 xl:p-6 scrollbar-hide">
 
@@ -21,6 +25,7 @@ const Message = () => {
         {chats.map((chat) => (
           <div
             key={chat.id}
+            onClick={() => openChat(chat)}
             className="flex items-center gap-4 mb-3 rounded-xl hover:bg-gray-100 cursor-pointer"
           >
             {/* Profile */}

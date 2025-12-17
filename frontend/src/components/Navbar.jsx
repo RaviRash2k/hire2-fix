@@ -14,8 +14,8 @@ const Navbar = ({ state, setState }) => {
   const [openProfile, setOpenProfile] = useState(false)
   const [openPanel, setOpenPanel] = useState(null)
   const profileRef = useRef(null)
-  const panelRef = useRef(null)
-  const panelWrapperRef = useRef(null)
+  const messageRef = useRef(null)
+  const notificationRef = useRef(null)
   const navigate = useNavigate()
   const location = useLocation();
   const [nav, setNav] = useState('/')
@@ -29,24 +29,33 @@ const Navbar = ({ state, setState }) => {
   // close outside click
   useEffect(() => {
     const handleClickOutside = (e) => {
-      
-      if (profileRef.current && !profileRef.current.contains(e.target)) {
-        setOpenProfile(false)
+
+      if (
+        openPanel === "message" &&
+        messageRef.current &&
+        !messageRef.current.contains(e.target)
+      ) {
+        setOpenPanel(null)
       }
 
       if (
-        panelWrapperRef.current &&
-        !panelWrapperRef.current.contains(e.target)
+        openPanel === "notification" &&
+        notificationRef.current &&
+        !notificationRef.current.contains(e.target)
       ) {
         setOpenPanel(null)
+      }
+
+      if (profileRef.current && !profileRef.current.contains(e.target)) {
+        setOpenProfile(false)
       }
     }
 
     document.addEventListener("mousedown", handleClickOutside)
     return () => document.removeEventListener("mousedown", handleClickOutside)
-  }, [])
+  }, [openPanel])
 
-
+  
   return (
     <>
       <nav className="fixed top-0 left-0 w-full bg-theme shadow-md z-50 px-4 md:px-8">
@@ -130,7 +139,7 @@ const Navbar = ({ state, setState }) => {
             </div>
 
             {/* message */}
-            <div className="relative" ref={panelWrapperRef}>
+            <div className="relative" ref={messageRef}>
               <img
                 src={chatIcon}
                 className="w-6 h-6 lg:w-7 lg:h-7 cursor-pointer"
@@ -148,7 +157,7 @@ const Navbar = ({ state, setState }) => {
             </div>
 
             {/* notification */}
-            <div className="relative" ref={panelWrapperRef}>
+            <div className="relative" ref={notificationRef}>
               <img
                 src={notificationIcon}
                 className="w-6 h-6 lg:w-7 lg:h-7 cursor-pointer"

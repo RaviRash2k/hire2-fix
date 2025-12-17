@@ -8,14 +8,16 @@ import Services from './pages/Services'
 import Contact from './pages/Contact'
 import TechnicianList from './pages/TechnicianList'
 import Profile from './pages/Profile'
+import ChatPopup from './components/ChatPopup'
 
 const App = () => {
   
   const [state, setState] = useState("notification");
 
   return (
-    <div>
+    <>
       <Navbar state={state} setState={setState}/>
+
       <Routes>
         <Route path='/' element={<Home state={state}/>} />
         <Route path='/about' element={<About/>} />
@@ -25,7 +27,9 @@ const App = () => {
         <Route path='/categories' element={<TechnicianList/>} />
         <Route path="/technician/:id" element={<Profile />} />
       </Routes>
-    </div>
+
+      <ChatPopup />
+    </>
   )
 }
 
