@@ -1,7 +1,14 @@
 import User from "../models/userModel.js";
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
+import jwt from 'jsonwebtoken';
 
+//craete token
+const generateToken = (id) => {
+    return jwt.sign({id}, process.env.JWT_SECRET);
+}
+
+//register user
 const registerUser = async (req, res) => {
 
     try {
@@ -49,4 +56,31 @@ const registerUser = async (req, res) => {
 
 }
 
-export { registerUser };
+//login user
+const loginUser = async (req, res) => {
+    const { email, password } = req.body;
+
+    try {
+        
+        //check user
+        const user = await User.findOne({ email });
+        if(!user){
+            return res.json({success: false, message: "User not found!"})
+        }
+
+        //check password
+        const isMatch = await bcrypt.compare(password, user.password);
+        if(!isMatch){
+            return res.json({success: false, message: "Invalid credentials!"})
+        }
+        
+        //create token
+        const token = generateToken(user._id);
+        return res.json({success: true, token, user: {name: user.name, email: user.email}})
+
+    } catch (error) {
+        
+    }
+}
+
+export { registerUser, loginUser };
