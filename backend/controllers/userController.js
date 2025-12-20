@@ -4,9 +4,10 @@ import validator from 'validator';
 import jwt from 'jsonwebtoken';
 
 //craete token
-const generateToken = (id) => {
-    return jwt.sign({id}, process.env.JWT_SECRET);
+const generateToken = (user) => {
+    return jwt.sign({id: user._id, role: user.role}, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
+
 
 //register user
 const registerUser = async (req, res) => {
@@ -75,11 +76,11 @@ const loginUser = async (req, res) => {
         }
         
         //create token
-        const token = generateToken(user._id);
-        return res.json({success: true, token, user: {name: user.name, email: user.email}})
+        const token = generateToken(user);
+        return res.json({success: true, token, user: {id: user._id, name: user.name, email: user.email, role: user.role}})
 
     } catch (error) {
-        
+        res.status(500).json({ message: "Server error" });
     }
 }
 
