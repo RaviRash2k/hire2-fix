@@ -8,7 +8,6 @@ const generateToken = (user) => {
     return jwt.sign({id: user._id, role: user.role}, process.env.JWT_SECRET, { expiresIn: "7d" });
 }
 
-
 //register user
 const registerUser = async (req, res) => {
 
@@ -84,4 +83,55 @@ const loginUser = async (req, res) => {
     }
 }
 
-export { registerUser, loginUser };
+//apply technician
+const applyTechnician = async (req, res) => {
+    try {
+        const user = req.user;
+
+        // already applied
+        if (user.technicianProfile?.status === "pending") {
+        return res.status(400).json({ message: "Application already pending" });
+        }
+
+        if (user.role === "technician") {
+        return res.status(400).json({ message: "Already a technician" });
+        }
+
+        const {
+        nicFront,
+        nicBack,
+        address,
+        workingLocation,
+        categories,
+        workingDays,
+        workingHours,
+        bestTimeToCall
+        } = req.body;
+
+        // Save data
+        user.technicianProfile = {
+        nicFront,
+        nicBack,
+        address,
+        workingLocation,
+        categories,
+        workingDays,
+        workingHours,
+        bestTimeToCall,
+        status: "pending",
+        appliedAt: new Date()
+        };
+
+        await user.save();
+
+        res.status(200).json({success: true, message: "Technician application submitted. Waiting for approval."});
+
+  } catch (error) {
+        res.status(500).json({ message: error.message });
+  }
+}
+
+
+
+
+export { registerUser, loginUser, applyTechnician };

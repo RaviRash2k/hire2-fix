@@ -6,7 +6,7 @@ const technicianProfileSchema = new mongoose.Schema({
   address: String,
   workingLocation: String,
   categories: [String],
-  workingDays: String,
+  workingDays: [String],
   workingHours: String,
   bestTimeToCall: String,
 
