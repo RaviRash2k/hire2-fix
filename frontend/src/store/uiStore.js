@@ -1,10 +1,11 @@
 import { create } from "zustand"
 
-const useUiStore = create((set) => ({
+export const useUiStore = create((set) => ({
     
   // states
   selectedCategory: "all",
   currentPage: 1,
+  url: "http://localhost:3000",
 
   // actions
   setCategory: (category) =>
@@ -16,5 +17,3 @@ const useUiStore = create((set) => ({
   setPage: (page) =>
     set({ currentPage: page }),
 }))
-
-export default useUiStore
