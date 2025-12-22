@@ -2,6 +2,8 @@ import User from "../models/userModel.js";
 import bcrypt from 'bcryptjs';
 import validator from 'validator';
 import jwt from 'jsonwebtoken';
+import fs from "fs";
+import path from "path";
 
 //craete token
 const generateToken = (user) => {
@@ -131,7 +133,52 @@ const applyTechnician = async (req, res) => {
   }
 }
 
+//upload pro pic
+const uploadAvatar = async (req, res) => {
+    try {
+        if (!req.file) {
+            return res.status(400).json({ success: false, message: "No file" });
+        }
+
+        const imageUrl = `/uploads/profile/${req.file.filename}`;
+
+        await User.findByIdAndUpdate(req.user.id, {
+            profileImage: imageUrl,
+        });
+
+        res.json({ success: true, imageUrl });
+
+    } catch (error) {
+        res.json({ success: false, message: error.message });
+    }
+}
+
+//delete pro pic
+const deleteAvatar = async (req, res) => {
+  try {
+    const user = await User.findById(req.user.id);
+
+    if (!user || !user.profileImage) {
+      return res.status(404).json({ success: false, message: "No avatar found" });
+    }
+
+    // remove file
+    const filePath = path.join(process.cwd(), user.profileImage);
+    fs.unlink(filePath, (err) => {
+      if (err) console.log("File delete error:", err);
+    });
+
+    // remove db
+    user.profileImage = "";
+    await user.save();
+
+    res.json({ success: true, message: "Avatar deleted" });
+
+  } catch (error) {
+    res.status(500).json({ success: false, message: error.message });
+  }
+};
 
 
 
-export { registerUser, loginUser, applyTechnician };
+export { registerUser, loginUser, applyTechnician, uploadAvatar, deleteAvatar };

@@ -15,6 +15,7 @@ app.use(express.json());
 conn();
 
 //routes
+app.use("/uploads", express.static("uploads"));
 app.use('/api/user', userRoute);
 
 app.listen(PORT, () => {
