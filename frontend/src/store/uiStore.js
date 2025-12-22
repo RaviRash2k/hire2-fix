@@ -5,7 +5,6 @@ export const useUiStore = create((set) => ({
   // states
   selectedCategory: "all",
   currentPage: 1,
-  url: "http://localhost:3000",
 
   // actions
   setCategory: (category) =>

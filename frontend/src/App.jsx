@@ -1,4 +1,4 @@
-import React, {useState} from 'react'
+import React, {useState, useEffect} from 'react'
 import Navbar from './components/Navbar'
 import { Route, Routes } from 'react-router-dom'
 import Home from './pages/Home'
@@ -14,7 +14,11 @@ import { useAuthStore } from './store/authStore'
 const App = () => {
   
   const [state, setState] = useState("notification");
-  const {user, token} = useAuthStore();
+  const {user, token, checkToken} = useAuthStore();
+
+  useEffect(() => {
+    checkToken();
+  }, [checkToken]);
 
   return (
     <>

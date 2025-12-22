@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export const useAuthStore = create((set) => ({
-    
+
   token: localStorage.getItem("token") || null,
   user: JSON.parse(localStorage.getItem("user")) || null,
   isAuthenticated: !!localStorage.getItem("token"),
@@ -27,4 +27,19 @@ export const useAuthStore = create((set) => ({
       isAuthenticated: false,
     });
   },
+
+  checkToken: () => {
+  const token = localStorage.getItem("token");
+  if (!token) return;
+
+  const payload = JSON.parse(atob(token.split(".")[1]));
+  const isExpired = payload.exp * 1000 < Date.now();
+
+  if (isExpired) {
+    localStorage.removeItem("token");
+    localStorage.removeItem("user");
+    set({ token: null, user: null });
+  }
+},
+
 }));

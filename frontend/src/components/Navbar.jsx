@@ -7,6 +7,7 @@ import { Menu, Settings, ArrowRightLeft, LogOut, MessageCircleHeart } from "luci
 import Notification from "./Notification"
 import Message from "./Message"
 import { useLocation, useNavigate } from 'react-router-dom'
+import { useAuthStore } from "../store/authStore";
 
 const Navbar = ({ state, setState }) => {
 
@@ -19,6 +20,9 @@ const Navbar = ({ state, setState }) => {
   const navigate = useNavigate()
   const location = useLocation();
   const [nav, setNav] = useState('/')
+
+  const user = useAuthStore((state) => state.user);
+  const { logout } = useAuthStore.getState();
 
   //set active nav link
   useEffect(()=> {
@@ -187,7 +191,7 @@ const Navbar = ({ state, setState }) => {
 
                   <div className="flex items-center bg-white rounded-lg shadow-xl/20 p-2 gap-3 m-3">
                     <img src={profileImg} className="w-11 h-11 rounded-full" />
-                    <p className="font-medium">Ravindu Rashmitha</p>
+                    <p className="font-medium">{user?.name}</p>
                   </div>
 
                   <ul className="flex flex-col gap-2 lg:gap-4 p-4 lg:p-6">
@@ -207,9 +211,17 @@ const Navbar = ({ state, setState }) => {
                       <li className="">Give feedback</li>
                     </div>
 
-                    <div className='flex rounded-xl items-center gap-4 cursor-pointer hover:bg-gray-100 px-2 py-2'>
+                    <div
+                      onClick={() => {
+                        if (window.confirm("Are you sure you want to logout?")) {
+                          logout();
+                          navigate("/login");
+                        }
+                      }}
+                      className="flex rounded-xl items-center gap-4 cursor-pointer hover:bg-gray-100 px-2 py-2"
+                    >
                       <LogOut />
-                      <li className="">Logout</li>
+                      <li>Logout</li>
                     </div>
 
                   </ul>

@@ -1,15 +1,15 @@
 import React, {useState} from 'react'
-import axios from 'axios';
 import { Eye, EyeOff } from "lucide-react";
 import { useAuthStore } from "../store/authStore";
-import { useUiStore } from '../store/uiStore';
+import api from "../api/axios";
+import { useNavigate } from 'react-router-dom';
 
 const Sign = () => {
 
   const [state, setState] = useState("Login");
   const [showPassword, setShowPassword] = useState(false);
   const { login } = useAuthStore.getState();
-  const { url } = useUiStore.getState();
+  const navigate = useNavigate();
   
   //form data
   const [data, setData] = useState({
@@ -33,9 +33,8 @@ const Sign = () => {
 
     //create url
     const endpoint = state === "Register" ? "/api/user/register" : "/api/user/login";
-    const newUrl = `${url}${endpoint}`;
 
-    const response = await axios.post(newUrl, data);
+    const response = await api.post(endpoint, data);
 
     if(response.data.success){
 
@@ -49,8 +48,8 @@ const Sign = () => {
 
 
       if(state === "Login"){
-        alert("Login successful!");
         login(response.data.token, response.data.user);
+        navigate("/", { replace: true });
 
       }else{
         alert("Registration successful! Please login to your account.");
