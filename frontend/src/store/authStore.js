@@ -29,17 +29,24 @@ export const useAuthStore = create((set) => ({
   },
 
   checkToken: () => {
-  const token = localStorage.getItem("token");
-  if (!token) return;
+    const token = localStorage.getItem("token");
+    if (!token) return;
 
-  const payload = JSON.parse(atob(token.split(".")[1]));
-  const isExpired = payload.exp * 1000 < Date.now();
+    const payload = JSON.parse(atob(token.split(".")[1]));
+    const isExpired = payload.exp * 1000 < Date.now();
 
-  if (isExpired) {
-    localStorage.removeItem("token");
-    localStorage.removeItem("user");
-    set({ token: null, user: null });
-  }
-},
+    if (isExpired) {
+      localStorage.removeItem("token");
+      localStorage.removeItem("user");
+      set({ token: null, user: null });
+    }
+  },
+
+  updateAvatar: (profileImage) =>
+    set((state) => {
+      const updatedUser = { ...state.user, profileImage };
+      localStorage.setItem("user", JSON.stringify(updatedUser));
+      return { user: updatedUser };
+  }),
 
 }));

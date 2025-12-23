@@ -78,7 +78,7 @@ const loginUser = async (req, res) => {
         
         //create token
         const token = generateToken(user);
-        return res.json({success: true, token, user: {id: user._id, name: user.name, email: user.email, role: user.role}})
+        return res.json({success: true, token, user: {id: user._id, name: user.name, email: user.email, role: user.role, profileImage: user.profileImage}});
 
     } catch (error) {
         res.status(500).json({ message: "Server error" });
