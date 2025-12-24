@@ -179,6 +179,23 @@ const deleteAvatar = async (req, res) => {
   }
 };
 
+//get user
+const getTechnicianProfile = async (req, res) => {
+  try {
+    const user = await User.findById(req.params.id).select(
+      "-password"
+    );
+
+    if (!user || user.role !== "technician") {
+      return res.status(404).json({ success: false, message: "Technician not found" });
+    }
+
+    res.json({ success: true, user });
+    
+  } catch (err) {
+    res.status(500).json({ success: false, message: "Server error" });
+  }
+};
 
 
-export { registerUser, loginUser, applyTechnician, uploadAvatar, deleteAvatar };
+export { registerUser, loginUser, applyTechnician, uploadAvatar, deleteAvatar, getTechnicianProfile };

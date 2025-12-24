@@ -6,23 +6,22 @@ import profileImg from "../assets/profile_1.jpg"
 import { Menu, Settings, ArrowRightLeft, LogOut, MessageCircleHeart } from "lucide-react"
 import Notification from "./Notification"
 import Message from "./Message"
+import AvatarModal from "./AvaterModal"
 import { useLocation, useNavigate } from 'react-router-dom'
 import { useAuthStore } from "../store/authStore";
-import api from "../api/axios";
 
 const Navbar = ({ state, setState }) => {
 
   const [menuOpen, setMenuOpen] = useState(false)
   const [openProfile, setOpenProfile] = useState(false)
   const [openPanel, setOpenPanel] = useState(null)
+  const [openAvatar, setOpenAvatar] = useState(false);
   const profileRef = useRef(null)
   const messageRef = useRef(null)
   const notificationRef = useRef(null)
   const navigate = useNavigate()
   const location = useLocation();
   const [nav, setNav] = useState('/')
-  const [openAvatar, setOpenAvatar] = useState(false);
-  const [img, setImg] = useState(false);
 
   const user = useAuthStore((state) => state.user);
   const { logout } = useAuthStore.getState();
@@ -61,55 +60,12 @@ const Navbar = ({ state, setState }) => {
     return () => document.removeEventListener("mousedown", handleClickOutside)
   }, [openPanel])
 
-  //aveter url
+  //avatar url
   const avatarUrl = user?.profileImage
   ? `http://localhost:3000${user.profileImage}`
   : profileImg;
 
   const hasImage = user?.profileImage;
-
-  //handle pro pic upload
-  const handleUpload = async () => {
-    if (!img) {
-      alert("Please select an image first");
-      return;
-    }
-
-    try {
-      const formData = new FormData();
-      formData.append("profileImage", img);
-
-      const res = await api.post(
-        "/api/user/upload-avatar",
-        formData
-      );
-
-      if (res.data.success) {
-        useAuthStore.getState().updateAvatar(res.data.imageUrl);
-        setImg(null);
-        setOpenAvatar(false);
-      }
-    } catch (err) {
-      console.error(err);
-      alert(err);
-    }
-  };
-
-  //handle pro pic delete
-  const handleDelete = async () => {
-    try {
-      const res = await api.delete("/api/user/delete-avatar");
-
-      if (res.data.success) {
-        useAuthStore.getState().updateAvatar("");
-      }
-
-    } catch (error) {
-      console.error(err);
-      alert(err);
-    }
-  }
-
 
   return (
     <>
@@ -240,8 +196,17 @@ const Navbar = ({ state, setState }) => {
               {openProfile && (
                 <div className="absolute right-0 mt-3 w-70 xl:w-115 bg-white rounded-lg shadow-xl/30 z-50 text-[14px] xl:text-[19px]">
 
-                  <div className="flex items-center bg-white rounded-lg shadow-xl/20 p-2 gap-3 m-3" onClick={() => setOpenAvatar(true)}>
-                    <img src={avatarUrl} className="w-11 h-11 rounded-full" />
+                  <div
+                    className="flex items-center bg-white rounded-lg shadow-xl/20 p-2 gap-3 m-3 cursor-pointer"
+                    onClick={() => {
+                      if (user?.role === "customer") {
+                        setOpenAvatar(true);
+                      } else if (user?.role === "technician") {
+                        navigate(`/me`);
+                      }
+                    }}
+                  >
+                    <img src={avatarUrl} className="w-11 h-11 rounded-full object-cover" />
                     <p className="font-medium">{user?.name}</p>
                   </div>
 
@@ -280,75 +245,18 @@ const Navbar = ({ state, setState }) => {
               )}
             </div>
 
-            {openAvatar && (
-              <div className="fixed inset-0 bg-black/80 flex items-center justify-center z-50">
-                <div className="bg-white rounded-2xl p-6 w-80">
-
-                  <h3 className="font-semibold mb-4 text-center">
-                    Profile Picture
-                  </h3>
-
-                  {/* avatar preview */}
-                  <div className="flex justify-center mb-4">
-                    <div className="w-30 h-30 lg:w-50 lg:h-50 rounded-full overflow-hidden border shadow">
-                      <img
-                        src={hasImage ? avatarUrl : img ? URL.createObjectURL(img) : profileImg}
-                        className="w-full h-full object-cover"
-                      />
-                    </div>
-                  </div>
-
-                  {/* file input */}
-                  <input
-                    type="file"
-                    accept="image/*"
-                    onChange={(e) => setImg(e.target.files[0])}
-                    disabled={hasImage}
-                    className={`w-full mb-4 text-sm
-                      ${hasImage ? "hidden" : ""}
-                    `}
-                  />
-
-                  {/* buttons */}
-                  <div className="flex justify-end gap-3">
-
-                    <button
-                      onClick={() => {setOpenAvatar(false); setImg(null)}}
-                      className="px-4 py-2 rounded-lg bg-gray-200"
-                    >
-                      Cancel
-                    </button>
-
-                    {hasImage ? (
-                      <button
-                        onClick={() => {
-                          if (window.confirm("Are you sure remove profile image?")) {
-                            handleDelete();
-                          }
-                        }}
-                        className="px-4 py-2 rounded-lg bg-red-500 text-white"
-                      >
-                        Delete
-                      </button>
-                    ) : (
-                      <button
-                        className="px-4 py-2 rounded-lg bg-theme text-white"
-                        onClick={handleUpload}
-                      >
-                        Upload
-                      </button>
-                    )}
-
-                  </div>
-
-                </div>
-              </div>
-            )}
-
           </div>
 
         </div>
       </nav>
+
+      {/* Avatar Modal */}
+      <AvatarModal
+        isOpen={openAvatar}
+        onClose={() => setOpenAvatar(false)}
+        currentAvatar={avatarUrl}
+        hasImage={hasImage}
+      />
 
       {/* MOBILE SIDE MENU BACKDROP */}
       {menuOpen && (
