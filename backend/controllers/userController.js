@@ -87,46 +87,55 @@ const loginUser = async (req, res) => {
 
 //apply technician
 const applyTechnician = async (req, res) => {
+    
     try {
-        const user = req.user;
 
-        // already applied
-        if (user.technicianProfile?.status === "pending") {
-        return res.status(400).json({ message: "Application already pending" });
-        }
+      if (!req.files || !req.files.nicFront || !req.files.nicBack) { 
+        return res.status(400).json({ success: false, message: "No files uploaded" });
+      }
 
-        if (user.role === "technician") {
-        return res.status(400).json({ message: "Already a technician" });
-        }
+      const nicFrontUrl = `/uploads/profile/${req.files.nicFront[0].filename}`;
+      const nicBackUrl = `/uploads/profile/${req.files.nicBack[0].filename}`;
 
-        const {
-        nicFront,
-        nicBack,
-        address,
-        workingLocation,
-        categories,
-        workingDays,
-        workingHours,
-        bestTimeToCall
-        } = req.body;
+      const user = req.user;
 
-        // Save data
-        user.technicianProfile = {
-        nicFront,
-        nicBack,
-        address,
-        workingLocation,
-        categories,
-        workingDays,
-        workingHours,
-        bestTimeToCall,
-        status: "pending",
-        appliedAt: new Date()
-        };
+      // already applied
+      if (user.technicianProfile?.status === "pending") {
+      return res.status(400).json({ message: "Application already pending" });
+      }
 
-        await user.save();
+      if (user.role === "technician") {
+      return res.status(400).json({ message: "Already a technician" });
+      }
 
-        res.status(200).json({success: true, message: "Technician application submitted. Waiting for approval."});
+      const {
+      // nicFront,
+      // nicBack,
+      address,
+      workingLocation,
+      categories,
+      workingDays,
+      workingHours,
+      bestTimeToCall
+      } = req.body;
+
+      // Save data
+      user.technicianProfile = {
+      nicFront: nicFrontUrl,
+      nicBack: nicBackUrl,
+      address,
+      workingLocation,
+      categories,
+      workingDays,
+      workingHours,
+      bestTimeToCall,
+      status: "pending",
+      appliedAt: new Date()
+      };
+
+      await user.save();
+
+      res.status(200).json({success: true, message: "Technician application submitted. Waiting for approval."});
 
   } catch (error) {
         res.status(500).json({ message: error.message });

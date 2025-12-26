@@ -58,7 +58,7 @@ const MyProfile = () => {
 
   if (!profile) {
     return (
-      <div className="bg-gray-100 min-h-screen pt-20 px-4 md:px-10 flex items-center justify-center">
+      <div className="bg-background min-h-screen pt-20 px-4 md:px-10 flex items-center justify-center">
         <div className="text-center">
           <p className="text-gray-600">No profile data available</p>
         </div>
@@ -73,7 +73,7 @@ const MyProfile = () => {
   const hasImage = !!profile?.profileImage
 
   return (
-    <div className="bg-gray-100 min-h-screen pt-20 px-4 md:px-10">
+    <div className="bg-background min-h-screen pt-20 px-4 md:px-10">
 
       {/* MAIN CARD */}
       <div className="max-w-5xl mx-auto bg-white rounded-2xl shadow-xl p-6 md:p-10">
